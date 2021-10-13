@@ -61,6 +61,21 @@ public class FluxAndMonoServices {
         //.filter(s -> s.length() > number);
     }
 
+    public  Flux<String> fruitFluxTransformSwitchIfEmpty(int number) {
+
+        Function<Flux<String>, Flux<String>> transformData = data -> data.filter(s-> s.length() > number);
+        return  Flux.fromIterable(List.of("Orange", "Apple", "Banana"))
+                .transform(transformData)
+                .switchIfEmpty(Flux.just("PineApple"));
+        //.filter(s -> s.length() > number);
+    }
+
+    public Flux<String> fruitFluxConcat() {
+            Flux<String> fruits = Flux.just("Apple", "Mango", "Orange");
+            Flux<String> veggies = Flux.just("Tomato", "Lemon");
+
+            return Flux.concat(fruits, veggies);
+    }
 
     public static void main(String[] args) {
 
@@ -87,8 +102,10 @@ public class FluxAndMonoServices {
 
         //fluxAndMonoServices.fruitMonoFlatMapMany().subscribe(System.out::println);
 
-        fluxAndMonoServices.fruitFluxTransform(5).subscribe(item -> System.out.println(item));
+        //fluxAndMonoServices.fruitFluxTransform(5).subscribe(item -> System.out.println(item));
 
-        fluxAndMonoServices.fruitFluxTransformDefaultIfEmpty(15).subscribe(s -> System.out.println(s));
+        //fluxAndMonoServices.fruitFluxTransformDefaultIfEmpty(15).subscribe(s -> System.out.println(s));
+        fluxAndMonoServices.fruitFluxTransformSwitchIfEmpty(15).subscribe(System.out::println);
+        fluxAndMonoServices.fruitFluxConcat().subscribe(System.out::println);
     }
 }
