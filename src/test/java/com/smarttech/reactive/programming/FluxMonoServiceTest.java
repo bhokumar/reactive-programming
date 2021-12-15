@@ -114,9 +114,9 @@ public class FluxMonoServiceTest {
 
     @Test
     void fruitsFluxOnContinue() {
-        var fruitFlux = fluxAndMonoServices.fruitsFluxOnReturn();
+        var fruitFlux = fluxAndMonoServices.fruitsFluxOnContinue();
         StepVerifier.create(fruitFlux)
-                .expectNext("Mango", "Apple", "Default value")
+                .expectNext("Mango", "Orange")
                 .verifyComplete();
     }
 
